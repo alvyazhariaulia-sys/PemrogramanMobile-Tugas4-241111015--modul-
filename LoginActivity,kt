@@ -1,0 +1,45 @@
+package com.utama.aplikasiloginsederhana3a
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class LoginActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+
+        // Hubungkan variabel dengan ID yang ada di XML activity_login
+        val etUser = findViewById<EditText>(R.id.etUsernameLogin)
+        val etPass = findViewById<EditText>(R.id.etPasswordLogin)
+        val btnLogin = findViewById<Button>(R.id.btnLogin)
+        val tvToRegister = findViewById<TextView>(R.id.tvToRegister)
+
+        // LOGIKA 1: Klik tombol MASUK -> Ke Homepage
+        btnLogin.setOnClickListener {
+            val user = etUser.text.toString().trim()
+            val pass = etPass.text.toString().trim()
+
+            if (user.isNotEmpty() && pass.isNotEmpty()) {
+                // Pastikan nama filenya HomeActivity
+                val intent = Intent(this, HomeActivity::class.java)
+                intent.putExtra("username", user)
+                startActivity(intent)
+                finish() // Biar kalau di-back nggak balik ke login lagi
+            } else {
+                Toast.makeText(this, "Username & Password harus diisi!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // LOGIKA 2: Klik tulisan "Daftar di sini" -> Ke Form Registrasi (MainActivity)
+        tvToRegister.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
+}
